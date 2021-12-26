@@ -1,0 +1,58 @@
+Only in .: arm64.patch
+diff -ur ../oscpack_1_1_0/osc/OscOutboundPacketStream.h ./osc/OscOutboundPacketStream.h
+--- ../oscpack_1_1_0/osc/OscOutboundPacketStream.h	2013-03-04 18:45:52.000000000 +0900
++++ ./osc/OscOutboundPacketStream.h	2021-12-26 20:51:57.000000000 +0900
+@@ -105,7 +105,7 @@
+     OutboundPacketStream& operator<<( const InfinitumType& rhs );
+     OutboundPacketStream& operator<<( int32 rhs );
+ 
+-#if !(defined(__x86_64__) || defined(_M_X64))
++#if !(defined(__x86_64__) || defined(_M_X64) || defined(_LP64))
+     OutboundPacketStream& operator<<( int rhs )
+             { *this << (int32)rhs; return *this; }
+ #endif
+diff -ur ../oscpack_1_1_0/osc/OscReceivedElements.h ./osc/OscReceivedElements.h
+--- ../oscpack_1_1_0/osc/OscReceivedElements.h	2013-03-04 20:19:56.000000000 +0900
++++ ./osc/OscReceivedElements.h	2021-12-26 20:52:38.000000000 +0900
+@@ -100,7 +100,7 @@
+         : contents_( contents )
+         , size_( ValidateSize( (osc_bundle_element_size_t)size ) ) {}
+ 
+-#if !(defined(__x86_64__) || defined(_M_X64))
++#if !(defined(__x86_64__) || defined(_M_X64) || defined(_LP64))
+     ReceivedPacket( const char *contents, int size )
+         : contents_( contents )
+         , size_( ValidateSize( (osc_bundle_element_size_t)size ) ) {}
+diff -ur ../oscpack_1_1_0/osc/OscTypes.h ./osc/OscTypes.h
+--- ../oscpack_1_1_0/osc/OscTypes.h	2013-03-04 20:17:08.000000000 +0900
++++ ./osc/OscTypes.h	2021-12-26 20:49:52.000000000 +0900
+@@ -37,17 +37,18 @@
+ #ifndef INCLUDED_OSCPACK_OSCTYPES_H
+ #define INCLUDED_OSCPACK_OSCTYPES_H
+ 
++#include <limits.h>
+ 
+ namespace osc{
+ 
+ // basic types
+ 
+-#if defined(__BORLANDC__) || defined(_MSC_VER)
++#if defined(__BORLANDC__) || defined(_MSC_VER) 
+ 
+ typedef __int64 int64;
+ typedef unsigned __int64 uint64;
+ 
+-#elif defined(__x86_64__) || defined(_M_X64)
++#elif defined(__x86_64__) || defined(_M_X64) || defined(_LP64)
+ 
+ typedef long int64;
+ typedef unsigned long uint64;
+@@ -61,7 +62,7 @@
+ 
+ 
+ 
+-#if defined(__x86_64__) || defined(_M_X64)
++#if defined(__x86_64__) || defined(_M_X64) || defined(_LP64)
+ 
+ typedef signed int int32;
+ typedef unsigned int uint32;
