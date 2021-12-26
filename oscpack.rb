@@ -12,6 +12,11 @@ class Oscpack < Formula
     system "make", "PREFIX=#{prefix}", "install"
   end
 
+  patch :p0 do
+    url "https://raw.githubusercontent.com/yoggy/homebrew-tap/master/oscpack-arm64.patch"
+    sha256 "09e9178d1782f79cc33bf64c35f74755f290855a7489681f09fbcef464a5d70b"
+  end
+
   test do
     system "false"
   end
