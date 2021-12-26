@@ -1,8 +1,8 @@
 class Sendosc < Formula
   desc "Simple command-line tool for sending OSC packet"
   homepage "https://github.com/yoggy/sendosc/"
-  url "https://github.com/yoggy/sendosc/archive/v1.0.1.tar.gz"
-  sha256 "91cbe48e60f133c56d31f909c281d83fee4cabb4af9cb5a927468087967f9e07"
+  url "https://github.com/yoggy/sendosc/archive/v1.0.3.tar.gz"
+  sha256 "c0dee7bc6baae0ac0dc5417e8ab6379911fcc23a198fdd9b10bd861deedfbfe9"
   depends_on "cmake" => :build
   depends_on "yoggy/tap/oscpack"
 
